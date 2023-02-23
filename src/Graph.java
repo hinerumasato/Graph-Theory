@@ -19,12 +19,6 @@ public abstract class Graph {
 		}
 	}
 	
-	public abstract void addEdge(int u, int v);
-	public abstract void removeEdge(int u, int v);
-	public abstract int degree(int v);
-	public abstract int numberOfEdges();
-	public abstract void printEdges();
-	
 	public void printAdjMatrix() {
 		for(int i = 0; i < this.adjMatrix.length; i++) {
 			for(int j = 0; j < this.adjMatrix[i].length; j++)
@@ -48,11 +42,11 @@ public abstract class Graph {
 		System.out.println();
 	}
 
-	public String DFS() {
+	public String DFS(int v) {
 		boolean[] visited = new boolean[this.adjMatrix.length];
 		String temp = "";
-		String result = DFSSub(0, visited, temp);
-		return result;
+		String result = DFSSub(v, visited, temp);
+		return result.trim();
 	}
 
 	private String DFSSub(int v, boolean[] visited, String resultSub) {
@@ -64,12 +58,11 @@ public abstract class Graph {
 		return resultSub;
 	}
 
-	public String BFS() {
+	public String BFS(int v) {
 		String result = "";
 		boolean[] visited = new boolean[this.adjMatrix.length];
 
 		Queue<Integer> queue = new ConcurrentLinkedQueue<Integer>();
-		int v = 0;
 		visited[v] = true;
 		queue.add(v);
 		result += (v+1) + " ";
@@ -84,8 +77,31 @@ public abstract class Graph {
 				}
 			}
 		}
-		return result;
+		return result.trim();
 	}
-
+	
+	public boolean isSingleGraph() {
+		for(int i = 0; i < adjMatrix.length; i++)
+			for(int j = 0; j < adjMatrix[i].length; j++)
+				if(adjMatrix[i][j] > 1)
+					return false;
+		return true;
+	}
+	
+	public boolean isHaveWay(int u, int v) {
+		String[] vertexDFSArr = DFS(u).split(" ");
+		for(String vertex : vertexDFSArr)
+			if(Integer.parseInt(vertex) == v)
+				return true;
+		return false;
+	}
+	
+	public abstract void addEdge(int u, int v);
+	public abstract void removeEdge(int u, int v);
+	public abstract int degree(int v);
+	public abstract int numberOfEdges();
+	public abstract void printEdges();
 	public abstract boolean isConnected();
+	public abstract int connectedComponents();
+
 }

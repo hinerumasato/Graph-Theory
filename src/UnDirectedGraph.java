@@ -7,11 +7,9 @@ public class UnDirectedGraph extends Graph {
 	}
 
 	@Override
-	public void addEdge(int u, int v) {
-		if(this.adjMatrix[u-1][v-1] == 0 && this.adjMatrix[v-1][u-1] == 0) {			
-			this.adjMatrix[u-1][v-1]++;
-			this.adjMatrix[v-1][u-1]++;
-		}
+	public void addEdge(int u, int v) {			
+		this.adjMatrix[u-1][v-1]++;
+		this.adjMatrix[v-1][u-1]++;
 		
 		List<Integer> listU = this.adjList.get(u);
 		listU.add(v);
@@ -65,7 +63,22 @@ public class UnDirectedGraph extends Graph {
 
 	@Override
 	public boolean isConnected() {
-		return this.DFS().split(" ").length == this.adjMatrix.length;
+		return this.DFS(0).split(" ").length == this.adjMatrix.length;
+	}
+
+	@Override
+	public int connectedComponents() {
+		int result = 0;
+		boolean[] visited = new boolean[adjMatrix.length];
+		for(int i = 0; i < adjMatrix.length; i++) {
+			if(!visited[i]) {
+				String[] vertexDFSArr = DFS(i).split(" ");
+				for(String vertex : vertexDFSArr)
+					visited[Integer.parseInt(vertex) - 1] = true;
+				result++;
+			}
+		}
+		return result;
 	}
 	
 }
