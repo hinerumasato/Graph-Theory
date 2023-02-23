@@ -62,5 +62,10 @@ public class UnDirectedGraph extends Graph {
 					result += "(" + (i+1) + "," + (j+1) + ") ";
 		System.out.println(result);
 	}
+
+	@Override
+	public boolean isConnected() {
+		return this.DFS().split(" ").length == this.adjMatrix.length;
+	}
 	
 }

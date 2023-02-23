@@ -69,4 +69,10 @@ public class DirectedGraph extends Graph {
 		System.out.println(result);
 	}
 
+	@Override
+	public boolean isConnected() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'isConnected'");
+	}
+
 }
