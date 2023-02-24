@@ -20,6 +20,7 @@ public class App {
 		System.out.println("So canh: " + unGraph.numberOfEdges());
 		unGraph.printEdges();
 		System.out.println("DFS: " + unGraph.DFS(0));
+		System.out.println("DFS Stack: " + unGraph.DFSStack(0));
 		System.out.println("BFS: " + unGraph.BFS(0));
 		System.out.println("Lien thong: " + unGraph.isConnected());
 		System.out.println("Don do thi: " + unGraph.isSingleGraph());
