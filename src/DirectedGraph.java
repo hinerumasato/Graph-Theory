@@ -9,6 +9,10 @@ public class DirectedGraph extends Graph {
 		super(n);
 	}
 
+	public DirectedGraph(int n, int[][] adjMatrix) {
+		super(n, adjMatrix);
+	}
+
 	@Override
 	public void addEdge(int u, int v) {
 		this.adjMatrix[u - 1][v - 1]++;
@@ -74,18 +78,18 @@ public class DirectedGraph extends Graph {
 	@Override
 	public boolean isConnected() {
 		Set<Integer> vertexSet = new HashSet<Integer>();
-		for(int i = 0; i < adjMatrix.length; i++) {
+		for (int i = 0; i < adjMatrix.length; i++) {
 			String[] DFSVertex = DFS(i).split(" ");
-			for(String vertex : DFSVertex)
+			for (String vertex : DFSVertex)
 				vertexSet.add(Integer.parseInt(vertex));
 		}
 		return vertexSet.size() == adjMatrix.length;
 	}
-	
+
 	public String considerConnectivity() {
 		String result = "Lien thong manh";
-		for(int i = 0; i < adjMatrix.length; i++)
-			if(DFS(i).split(" ").length < adjMatrix.length) {
+		for (int i = 0; i < adjMatrix.length; i++)
+			if (DFS(i).split(" ").length < adjMatrix.length) {
 				result = "Lien thong yeu";
 				break;
 			}
@@ -96,8 +100,8 @@ public class DirectedGraph extends Graph {
 	public int connectedComponents() {
 		int result = 0;
 		boolean[] visited = new boolean[adjMatrix.length];
-		for(int i = 0; i < adjMatrix.length; i++) {
-			if(!visited[i]) {
+		for (int i = 0; i < adjMatrix.length; i++) {
+			if (!visited[i]) {
 				DFS(i);
 				result++;
 			}

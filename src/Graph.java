@@ -8,10 +8,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class Graph {
 
+	protected int vertex;
 	protected int[][] adjMatrix;
 	protected Map<Integer, List<Integer>> adjList;
 
 	public Graph(int n) {
+		this.vertex = n;
 		this.adjMatrix = new int[n][n];
 		this.adjList = new HashMap<Integer, List<Integer>>();
 		for (int i = 1; i <= n; i++) {
@@ -19,6 +21,28 @@ public abstract class Graph {
 			this.adjList.put(i, list);
 		}
 	}
+
+	public Graph(int n, int[][] adjMatrix) {
+		this.vertex = n;
+		this.adjMatrix = adjMatrix;
+		this.adjList = matrixToList();
+	}
+
+	
+
+	private Map<Integer, List<Integer>> matrixToList() {
+		Map<Integer, List<Integer>> result = new HashMap<Integer, List<Integer>>();
+
+		for(int i = 0; i < adjMatrix.length; i++) {
+			result.put(i, new ArrayList<Integer>());
+			for(int j = 0; j < adjMatrix[i].length; j++)
+				if(adjMatrix[i][j] != 0) {
+					List<Integer> list = result.get(i);
+					list.add(j);
+				}
+		}
+		return result;
+	} 
 
 	public void printAdjMatrix() {
 		for (int i = 0; i < this.adjMatrix.length; i++) {
@@ -32,9 +56,9 @@ public abstract class Graph {
 	public void printAdjList() {
 		String result = "";
 		for (int u : this.adjList.keySet()) {
-			result += u + ": ";
+			result += (u+1) + ": ";
 			for (int v : this.adjList.get(u)) {
-				result += v + ", ";
+				result += (v+1) + ", ";
 			}
 			result = result.substring(0, result.length() - 2);
 			result += "\n";
