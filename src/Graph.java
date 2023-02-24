@@ -122,17 +122,11 @@ public abstract class Graph {
 	}
 
 	public abstract void addEdge(int u, int v);
-
 	public abstract void removeEdge(int u, int v);
-
 	public abstract int degree(int v);
-
 	public abstract int numberOfEdges();
-
 	public abstract void printEdges();
-
 	public abstract boolean isConnected();
-
 	public abstract int connectedComponents();
 
 }
