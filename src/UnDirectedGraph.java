@@ -67,7 +67,7 @@ public class UnDirectedGraph extends Graph {
 
 	@Override
 	public boolean isConnected() {
-		return this.DFS(0).split(" ").length == this.adjMatrix.length;
+		return this.DFS(0).length == this.adjMatrix.length;
 	}
 
 	@Override
@@ -76,9 +76,9 @@ public class UnDirectedGraph extends Graph {
 		boolean[] visited = new boolean[adjMatrix.length];
 		for (int i = 0; i < adjMatrix.length; i++) {
 			if (!visited[i]) {
-				String[] vertexDFSArr = DFS(i).split(" ");
-				for (String vertex : vertexDFSArr)
-					visited[Integer.parseInt(vertex) - 1] = true;
+				int[] vertexDFSArr = DFS(i);
+				for (int vertex : vertexDFSArr)
+					visited[vertex - 1] = true;
 				result++;
 			}
 		}

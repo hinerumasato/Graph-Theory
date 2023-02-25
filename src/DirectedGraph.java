@@ -79,9 +79,9 @@ public class DirectedGraph extends Graph {
 	public boolean isConnected() {
 		Set<Integer> vertexSet = new HashSet<Integer>();
 		for (int i = 0; i < adjMatrix.length; i++) {
-			String[] DFSVertex = DFS(i).split(" ");
-			for (String vertex : DFSVertex)
-				vertexSet.add(Integer.parseInt(vertex));
+			int[] DFSVertex = DFS(i);
+			for (int vertex : DFSVertex)
+				vertexSet.add(vertex);
 		}
 		return vertexSet.size() == adjMatrix.length;
 	}
@@ -89,7 +89,7 @@ public class DirectedGraph extends Graph {
 	public String considerConnectivity() {
 		String result = "Lien thong manh";
 		for (int i = 0; i < adjMatrix.length; i++)
-			if (DFS(i).split(" ").length < adjMatrix.length) {
+			if (DFS(i).length < adjMatrix.length) {
 				result = "Lien thong yeu";
 				break;
 			}

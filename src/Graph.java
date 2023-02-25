@@ -67,20 +67,32 @@ public abstract class Graph {
 		System.out.println();
 	}
 
-	public String DFS(int v) {
-		boolean[] visited = new boolean[this.adjMatrix.length];
-		String temp = "";
-		String result = DFSSub(v, visited, temp);
-		return result.trim();
-	}
+	public int[] DFS(int v) {
+		List<Integer> list = new ArrayList<Integer>();
+		Stack<Integer> stack = new Stack<Integer>();
+		boolean[] visited = new boolean[adjMatrix.length];
 
-	private String DFSSub(int v, boolean[] visited, String resultSub) {
+		stack.push(v);
 		visited[v] = true;
-		resultSub += (v + 1) + " ";
-		for (int i = 0; i < adjMatrix[v].length; i++)
-			if (adjMatrix[v][i] != 0 && !visited[i])
-				resultSub = DFSSub(i, visited, resultSub);
-		return resultSub;
+		list.add(v+1);
+
+		while (!stack.isEmpty()) {
+			v = stack.pop();
+			if (!visited[v]) {
+				list.add(v+1);
+				visited[v] = true;
+			}
+			for (int i = adjMatrix.length - 1; i >= 0; i--) {
+				if (!visited[i] && adjMatrix[v][i] != 0) {
+					stack.push(i);
+				}
+			}
+		}
+
+		int[] result = new int[list.size()];
+		for(int i = 0; i < result.length; i++)
+			result[i] = list.get(i);
+		return result;
 	}
 
 	public String DFSStack(int v) {
@@ -107,14 +119,13 @@ public abstract class Graph {
 		return result;
 	}
 
-	public String BFS(int v) {
-		String result = "";
+	public int[] BFS(int v) {
 		boolean[] visited = new boolean[this.adjMatrix.length];
-
+		List<Integer> list = new ArrayList<Integer>();
 		Queue<Integer> queue = new ConcurrentLinkedQueue<Integer>();
 		visited[v] = true;
 		queue.add(v);
-		result += (v + 1) + " ";
+		list.add(v+1);
 
 		while (!queue.isEmpty()) {
 			v = queue.poll();
@@ -122,11 +133,15 @@ public abstract class Graph {
 				if (!visited[i] && adjMatrix[v][i] != 0) {
 					visited[i] = true;
 					queue.add(i);
-					result += (i + 1) + " ";
+					list.add(v+1);
 				}
 			}
 		}
-		return result.trim();
+
+		int[] result = new int[list.size()];
+		for(int i = 0; i < result.length; i++)
+			result[i] = list.get(i);
+		return result;
 	}
 
 	public boolean isSingleGraph() {
@@ -138,11 +153,39 @@ public abstract class Graph {
 	}
 
 	public boolean isHaveWay(int u, int v) {
-		String[] vertexDFSArr = DFS(u).split(" ");
-		for (String vertex : vertexDFSArr)
-			if (Integer.parseInt(vertex) == v)
+		int[] vertexDFSArr = DFS(u);
+		for (int vertex : vertexDFSArr)
+			if (vertex == v)
 				return true;
 		return false;
+	}
+
+	public boolean isDichotomousGraph() {
+		int v = 0;
+		int[] color = new int[adjMatrix.length];
+		color[v] = 1;
+
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(v);
+
+		while(!stack.isEmpty()) {
+			v = stack.pop();
+			for(int i = 0; i < adjMatrix[v].length; i++) {
+				if(color[i] == 0 && adjMatrix[v][i] != 0) {
+					color[i] = color[v] * -1;
+					stack.push(i);
+				}
+			}
+		}
+		
+		for(int i = 0; i < adjMatrix.length; i++) {
+			for(int j = 0; j < adjMatrix[i].length; j++)
+				if(adjMatrix[i][j] != 0) {
+					if(color[j] != color[i] * -1)
+						return false;
+				}
+		}
+		return true;
 	}
 
 	public abstract void addEdge(int u, int v);

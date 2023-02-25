@@ -54,7 +54,7 @@ public class App {
 	}
 
 	public static void autoTest() {
-		GraphUtils.generateRandomUnDirectedMatrixToFile("./src/Test/matrix.txt", 5);
+		// GraphUtils.generateRandomUnDirectedMatrixToFile("./src/Test/matrix.txt", 5);
 		Graph graph = GraphUtils.readFromFile("./src/Test/matrix.txt");
 		graph.printAdjList();
 		graph.printAdjMatrix();
@@ -69,7 +69,29 @@ public class App {
 		System.out.println("So thanh phan lien thong: " + graph.connectedComponents());
 	}
 
+	public static void dichotomousGraphTest() {
+		Graph graph = new UnDirectedGraph(9);
+		graph.addEdge(1, 6);
+		graph.addEdge(2, 6);
+		graph.addEdge(2, 7);
+		graph.addEdge(3, 8);
+		graph.addEdge(3, 9);
+		graph.addEdge(4, 7);
+		graph.addEdge(5, 6);
+		graph.addEdge(5, 9);
+
+		Graph graph2 = new UnDirectedGraph(3);
+		graph2.addEdge(1, 2);
+		graph2.addEdge(1, 3);
+		graph2.addEdge(2, 3);
+
+		System.out.println(graph.isDichotomousGraph());
+		System.out.println(graph2.isDichotomousGraph());
+	}
+
 	public static void main(String[] args) {
-		autoTest();
+		// autoTest();
+		dichotomousGraphTest();
+		
 	}
 }
