@@ -95,30 +95,6 @@ public abstract class Graph {
 		return result;
 	}
 
-	public String DFSStack(int v) {
-		String result = "";
-		boolean[] visited = new boolean[adjMatrix.length];
-		Stack<Integer> stack = new Stack<Integer>();
-
-		stack.push(v);
-		visited[v] = true;
-		result += (v + 1) + " ";
-
-		while (!stack.isEmpty()) {
-			v = stack.pop();
-			if (!visited[v]) {
-				result += (v + 1) + " ";
-				visited[v] = true;
-			}
-			for (int i = adjMatrix.length - 1; i >= 0; i--) {
-				if (!visited[i] && adjMatrix[v][i] != 0) {
-					stack.push(i);
-				}
-			}
-		}
-		return result;
-	}
-
 	public int[] BFS(int v) {
 		boolean[] visited = new boolean[this.adjMatrix.length];
 		List<Integer> list = new ArrayList<Integer>();

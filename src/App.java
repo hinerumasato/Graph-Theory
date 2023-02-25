@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class App {
 
 	public static void customTest() {
@@ -18,9 +20,8 @@ public class App {
 
 		System.out.println("So canh: " + unGraph.numberOfEdges());
 		unGraph.printEdges();
-		System.out.println("DFS: " + unGraph.DFS(0));
-		System.out.println("DFS Stack: " + unGraph.DFSStack(0));
-		System.out.println("BFS: " + unGraph.BFS(0));
+		System.out.println("DFS: " + Arrays.toString(unGraph.DFS(0)));
+		System.out.println("BFS: " + Arrays.toString(unGraph.BFS(0)));
 		System.out.println("Lien thong: " + unGraph.isConnected());
 		System.out.println("Don do thi: " + unGraph.isSingleGraph());
 		System.out.println("Co duong di: " + unGraph.isHaveWay(1, 4));
@@ -60,9 +61,8 @@ public class App {
 		graph.printAdjMatrix();
 		System.out.println("So canh: " + graph.numberOfEdges());
 		graph.printEdges();
-		System.out.println("DFS: " + graph.DFS(0));
-		System.out.println("DFS Stack: " + graph.DFSStack(0));
-		System.out.println("BFS: " + graph.BFS(0));
+		System.out.println("DFS: " + Arrays.toString(graph.DFS(0)));
+		System.out.println("BFS: " + Arrays.toString(graph.BFS(0)));
 		System.out.println("Lien thong: " + graph.isConnected());
 		System.out.println("Don do thi: " + graph.isSingleGraph());
 		System.out.println("Co duong di: " + graph.isHaveWay(1, 4));
