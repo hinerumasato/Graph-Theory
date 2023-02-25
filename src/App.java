@@ -27,31 +27,31 @@ public class App {
 		System.out.println("Co duong di: " + unGraph.isHaveWay(1, 4));
 		System.out.println("So thanh phan lien thong: " + unGraph.connectedComponents());
 
-		// DirectedGraph diGraph = new DirectedGraph(6);
-		//
-		// diGraph.addEdge(1, 2);
-		// diGraph.addEdge(2, 3);
-		// diGraph.addEdge(2, 4);
-		// diGraph.addEdge(3, 1);
-		// diGraph.addEdge(4, 3);
-		// diGraph.addEdge(4, 5);
-		// diGraph.addEdge(5, 6);
-		// diGraph.addEdge(6, 4);
-		//
-		// diGraph.printAdjList();
-		// diGraph.printAdjMatrix();
-		//
-		// System.out.println("So canh: " + diGraph.numberOfEdges());
-		// diGraph.printEdges();
-		//
-		// System.out.println("DFS: " + diGraph.DFS(0));
-		// System.out.println("BFS: " + diGraph.BFS(0));
-		// System.out.println("Lien Thong: " + diGraph.isConnected());
-		// System.out.println("Co Duong Di: " + diGraph.isHaveWay(1, 4));
-		//
-		// DirectedGraph tempDiGraph = (DirectedGraph)diGraph;
-		// System.out.println("Xet tinh lien thong: " +
-		// tempDiGraph.considerConnectivity());
+		DirectedGraph diGraph = new DirectedGraph(6);
+		
+		diGraph.addEdge(1, 2);
+		diGraph.addEdge(2, 3);
+		diGraph.addEdge(2, 4);
+		diGraph.addEdge(3, 1);
+		diGraph.addEdge(4, 3);
+		diGraph.addEdge(4, 5);
+		diGraph.addEdge(5, 6);
+		diGraph.addEdge(6, 4);
+		
+		diGraph.printAdjList();
+		diGraph.printAdjMatrix();
+		
+		System.out.println("So canh: " + diGraph.numberOfEdges());
+		diGraph.printEdges();
+		
+		System.out.println("DFS: " + Arrays.toString(diGraph.DFS(0)));
+		System.out.println("BFS: " + Arrays.toString(diGraph.BFS(0)));
+		System.out.println("Lien Thong: " + diGraph.isConnected());
+		System.out.println("Co Duong Di: " + diGraph.isHaveWay(1, 4));
+		
+		DirectedGraph tempDiGraph = (DirectedGraph)diGraph;
+		System.out.println("Xet tinh lien thong: " +
+		tempDiGraph.considerConnectivity());
 	}
 
 	public static void autoTest() {
