@@ -24,7 +24,7 @@ public class App {
 		System.out.println("BFS: " + Arrays.toString(unGraph.BFS(0)));
 		System.out.println("Lien thong: " + unGraph.isConnected());
 		System.out.println("Don do thi: " + unGraph.isSingleGraph());
-		System.out.println("Co duong di: " + unGraph.isHaveWay(1, 4));
+		System.out.println("Co duong di: " + unGraph.hasPath(1, 4));
 		System.out.println("So thanh phan lien thong: " + unGraph.connectedComponents());
 
 		DirectedGraph diGraph = new DirectedGraph(6);
@@ -47,7 +47,7 @@ public class App {
 		System.out.println("DFS: " + Arrays.toString(diGraph.DFS(0)));
 		System.out.println("BFS: " + Arrays.toString(diGraph.BFS(0)));
 		System.out.println("Lien Thong: " + diGraph.isConnected());
-		System.out.println("Co Duong Di: " + diGraph.isHaveWay(1, 4));
+		System.out.println("Co Duong Di: " + diGraph.hasPath(1, 4));
 		
 		DirectedGraph tempDiGraph = (DirectedGraph)diGraph;
 		System.out.println("Xet tinh lien thong: " +
@@ -65,7 +65,7 @@ public class App {
 		System.out.println("BFS: " + Arrays.toString(graph.BFS(0)));
 		System.out.println("Lien thong: " + graph.isConnected());
 		System.out.println("Don do thi: " + graph.isSingleGraph());
-		System.out.println("Co duong di: " + graph.isHaveWay(1, 4));
+		System.out.println("Co duong di: " + graph.hasPath(1, 4));
 		System.out.println("So thanh phan lien thong: " + graph.connectedComponents());
 	}
 
@@ -89,9 +89,24 @@ public class App {
 		System.out.println(graph2.isDichotomousGraph());
 	}
 
+	public static void eulerTest() {
+		Graph graph = new UnDirectedGraph(6);
+		graph.addEdge(1, 2);
+		graph.addEdge(1, 3);
+		graph.addEdge(2, 3);
+		graph.addEdge(3, 4);
+		graph.addEdge(4, 5);
+		graph.addEdge(5, 6);
+		graph.addEdge(6, 3);
+
+		graph.printAdjMatrix();
+
+		System.out.println(graph.getCycle());
+	}
+
 	public static void main(String[] args) {
 		// autoTest();
-		dichotomousGraphTest();
-		
+		// dichotomousGraphTest();
+		eulerTest();
 	}
 }

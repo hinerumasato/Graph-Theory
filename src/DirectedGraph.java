@@ -109,4 +109,21 @@ public class DirectedGraph extends Graph {
 		return result;
 	}
 
+	@Override
+	public boolean isEulerGraph() {
+		if(this.isConnected()) {
+			for(int i = 0; i < this.adjMatrix.length; i++)
+				if(inDegree(i) != outDegree(i))
+					return false;
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isHalfEulerGraph() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'isHalfEulerGraph'");
+	}
+
 }

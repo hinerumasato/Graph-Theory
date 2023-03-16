@@ -85,4 +85,28 @@ public class UnDirectedGraph extends Graph {
 		return result;
 	}
 
+	@Override
+	public boolean isEulerGraph() {
+		if(this.isConnected()) {
+			for(int i = 0; i < this.adjMatrix.length; i++)
+				if(degree(i) % 2 != 0)
+					return false;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isHalfEulerGraph() {
+		if(isConnected()) {
+			int oddDegVertexs = 0;
+			for(int i = 0; i < adjMatrix.length; i++) {
+				if(degree(i+1) % 2 != 0)
+					oddDegVertexs++;
+			}
+			return oddDegVertexs == 2;
+		}
+		return false;
+	}
+
 }

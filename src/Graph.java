@@ -28,21 +28,19 @@ public abstract class Graph {
 		this.adjList = matrixToList();
 	}
 
-	
-
 	private Map<Integer, List<Integer>> matrixToList() {
 		Map<Integer, List<Integer>> result = new HashMap<Integer, List<Integer>>();
 
-		for(int i = 0; i < adjMatrix.length; i++) {
+		for (int i = 0; i < adjMatrix.length; i++) {
 			result.put(i, new ArrayList<Integer>());
-			for(int j = 0; j < adjMatrix[i].length; j++)
-				if(adjMatrix[i][j] != 0) {
+			for (int j = 0; j < adjMatrix[i].length; j++)
+				if (adjMatrix[i][j] != 0) {
 					List<Integer> list = result.get(i);
 					list.add(j);
 				}
 		}
 		return result;
-	} 
+	}
 
 	public void printAdjMatrix() {
 		for (int i = 0; i < this.adjMatrix.length; i++) {
@@ -56,9 +54,9 @@ public abstract class Graph {
 	public void printAdjList() {
 		String result = "";
 		for (int u : this.adjList.keySet()) {
-			result += (u+1) + ": ";
+			result += (u + 1) + ": ";
 			for (int v : this.adjList.get(u)) {
-				result += (v+1) + ", ";
+				result += (v + 1) + ", ";
 			}
 			result = result.substring(0, result.length() - 2);
 			result += "\n";
@@ -74,12 +72,12 @@ public abstract class Graph {
 
 		stack.push(v);
 		visited[v] = true;
-		list.add(v+1);
+		list.add(v + 1);
 
 		while (!stack.isEmpty()) {
 			v = stack.pop();
 			if (!visited[v]) {
-				list.add(v+1);
+				list.add(v + 1);
 				visited[v] = true;
 			}
 			for (int i = adjMatrix.length - 1; i >= 0; i--) {
@@ -90,7 +88,7 @@ public abstract class Graph {
 		}
 
 		int[] result = new int[list.size()];
-		for(int i = 0; i < result.length; i++)
+		for (int i = 0; i < result.length; i++)
 			result[i] = list.get(i);
 		return result;
 	}
@@ -101,7 +99,7 @@ public abstract class Graph {
 		Queue<Integer> queue = new ConcurrentLinkedQueue<Integer>();
 		visited[v] = true;
 		queue.add(v);
-		list.add(v+1);
+		list.add(v + 1);
 
 		while (!queue.isEmpty()) {
 			v = queue.poll();
@@ -109,13 +107,13 @@ public abstract class Graph {
 				if (!visited[i] && adjMatrix[v][i] != 0) {
 					visited[i] = true;
 					queue.add(i);
-					list.add(v+1);
+					list.add(v + 1);
 				}
 			}
 		}
 
 		int[] result = new int[list.size()];
-		for(int i = 0; i < result.length; i++)
+		for (int i = 0; i < result.length; i++)
 			result[i] = list.get(i);
 		return result;
 	}
@@ -128,7 +126,7 @@ public abstract class Graph {
 		return true;
 	}
 
-	public boolean isHaveWay(int u, int v) {
+	public boolean hasPath(int u, int v) {
 		int[] vertexDFSArr = DFS(u);
 		for (int vertex : vertexDFSArr)
 			if (vertex == v)
@@ -144,24 +142,62 @@ public abstract class Graph {
 		Stack<Integer> stack = new Stack<Integer>();
 		stack.push(v);
 
-		while(!stack.isEmpty()) {
+		while (!stack.isEmpty()) {
 			v = stack.pop();
-			for(int i = 0; i < adjMatrix[v].length; i++) {
-				if(color[i] == 0 && adjMatrix[v][i] != 0) {
+			for (int i = 0; i < adjMatrix[v].length; i++) {
+				if (color[i] == 0 && adjMatrix[v][i] != 0) {
 					color[i] = color[v] * -1;
 					stack.push(i);
 				}
 			}
 		}
-		
-		for(int i = 0; i < adjMatrix.length; i++) {
-			for(int j = 0; j < adjMatrix[i].length; j++)
-				if(adjMatrix[i][j] != 0) {
-					if(color[j] != color[i] * -1)
+
+		for (int i = 0; i < adjMatrix.length; i++) {
+			for (int j = 0; j < adjMatrix[i].length; j++)
+				if (adjMatrix[i][j] != 0) {
+					if (color[j] != color[i] * -1)
 						return false;
 				}
 		}
 		return true;
+	}
+
+	public List<Integer> subCycle(int a) {
+		List<Integer> result = new ArrayList<Integer>();
+		result.add(a);
+		a--;
+		int temp = a;
+
+		do {
+			for (int i = 0; i < adjMatrix[temp].length; i++) {
+				if (adjMatrix[temp][i] != 0) {
+					result.add(i + 1);
+					this.removeEdge(temp + 1, i + 1);
+					temp = i;
+					break;
+				}
+			}
+		} while (temp != a);
+		return result;
+	}
+
+	public List<Integer> getCycle() {
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < adjMatrix.length; i++) {
+			while (degree(i + 1) > 0) {
+				List<Integer> temp = subCycle(i + 1);
+				if (result.size() == 0) {
+					result.addAll(temp);
+				} else {
+					int head = temp.get(0);
+					int pos = result.indexOf(head);
+					result.remove(pos);
+					result.addAll(pos, temp);
+				}
+
+			}
+		}
+		return result;
 	}
 
 	public abstract void addEdge(int u, int v);
@@ -171,5 +207,7 @@ public abstract class Graph {
 	public abstract void printEdges();
 	public abstract boolean isConnected();
 	public abstract int connectedComponents();
-
+	public abstract boolean isEulerGraph();
+	public abstract boolean isHalfEulerGraph();
 }
+
