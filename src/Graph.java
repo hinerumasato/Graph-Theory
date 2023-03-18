@@ -162,7 +162,7 @@ public abstract class Graph {
 		return true;
 	}
 
-	public List<Integer> getSubEulerCycle(int a) {
+	private List<Integer> getSubEulerCycle(int a) {
 		List<Integer> result = new ArrayList<Integer>();
 		result.add(a);
 		int temp = a;
