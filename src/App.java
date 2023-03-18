@@ -54,8 +54,8 @@ public class App {
 		tempDiGraph.considerConnectivity());
 	}
 
-	public static void autoTest() {
-		// GraphUtils.generateRandomUnDirectedMatrixToFile("./src/Test/matrix.txt", 5);
+	public static void autoTest() throws Exception {
+		GraphUtils.generateRandomUnDirectedMatrixToFile("./src/Test/matrix.txt", 5);
 		Graph graph = GraphUtils.readFromFile("./src/Test/matrix.txt");
 		graph.printAdjList();
 		graph.printAdjMatrix();
@@ -67,6 +67,7 @@ public class App {
 		System.out.println("Don do thi: " + graph.isSingleGraph());
 		System.out.println("Co duong di: " + graph.hasPath(1, 4));
 		System.out.println("So thanh phan lien thong: " + graph.connectedComponents());
+		System.out.println("Chu trinh Euler: " + graph.getEulerCycle());
 	}
 
 	public static void dichotomousGraphTest() {
@@ -89,24 +90,29 @@ public class App {
 		System.out.println(graph2.isDichotomousGraph());
 	}
 
-	public static void eulerTest() {
+	public static void eulerTest() throws Exception {
 		Graph graph = new UnDirectedGraph(6);
+		graph.addEdge(0, 1);
+		graph.addEdge(0, 2);
 		graph.addEdge(1, 2);
-		graph.addEdge(1, 3);
 		graph.addEdge(2, 3);
 		graph.addEdge(3, 4);
 		graph.addEdge(4, 5);
-		graph.addEdge(5, 6);
-		graph.addEdge(6, 3);
+		graph.addEdge(5, 2);
 
 		graph.printAdjMatrix();
 
-		System.out.println(graph.getCycle());
+		System.out.println(graph.getEulerCycle());
 	}
 
 	public static void main(String[] args) {
-		// autoTest();
-		// dichotomousGraphTest();
-		eulerTest();
+		try {
+			autoTest();
+			// dichotomousGraphTest();
+			// eulerTest();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

@@ -39,7 +39,7 @@ public class DirectedGraph extends Graph {
 
 	@Override
 	public int degree(int v) {
-		return 0;
+		return outDegree(v) + inDegree(v);
 	}
 
 	public int outDegree(int v) {

@@ -16,7 +16,7 @@ public abstract class Graph {
 		this.vertex = n;
 		this.adjMatrix = new int[n][n];
 		this.adjList = new HashMap<Integer, List<Integer>>();
-		for (int i = 1; i <= n; i++) {
+		for (int i = 0; i < n; i++) {
 			List<Integer> list = new ArrayList<Integer>();
 			this.adjList.put(i, list);
 		}
@@ -54,9 +54,9 @@ public abstract class Graph {
 	public void printAdjList() {
 		String result = "";
 		for (int u : this.adjList.keySet()) {
-			result += (u + 1) + ": ";
+			result += (u) + ": ";
 			for (int v : this.adjList.get(u)) {
-				result += (v + 1) + ", ";
+				result += (v) + ", ";
 			}
 			result = result.substring(0, result.length() - 2);
 			result += "\n";
@@ -72,12 +72,12 @@ public abstract class Graph {
 
 		stack.push(v);
 		visited[v] = true;
-		list.add(v + 1);
+		list.add(v);
 
 		while (!stack.isEmpty()) {
 			v = stack.pop();
 			if (!visited[v]) {
-				list.add(v + 1);
+				list.add(v);
 				visited[v] = true;
 			}
 			for (int i = adjMatrix.length - 1; i >= 0; i--) {
@@ -99,7 +99,7 @@ public abstract class Graph {
 		Queue<Integer> queue = new ConcurrentLinkedQueue<Integer>();
 		visited[v] = true;
 		queue.add(v);
-		list.add(v + 1);
+		list.add(v);
 
 		while (!queue.isEmpty()) {
 			v = queue.poll();
@@ -107,7 +107,7 @@ public abstract class Graph {
 				if (!visited[i] && adjMatrix[v][i] != 0) {
 					visited[i] = true;
 					queue.add(i);
-					list.add(v + 1);
+					list.add(i);
 				}
 			}
 		}
@@ -162,17 +162,16 @@ public abstract class Graph {
 		return true;
 	}
 
-	public List<Integer> subCycle(int a) {
+	public List<Integer> getSubEulerCycle(int a) {
 		List<Integer> result = new ArrayList<Integer>();
 		result.add(a);
-		a--;
 		int temp = a;
 
 		do {
 			for (int i = 0; i < adjMatrix[temp].length; i++) {
 				if (adjMatrix[temp][i] != 0) {
-					result.add(i + 1);
-					this.removeEdge(temp + 1, i + 1);
+					result.add(i);
+					this.removeEdge(temp, i);
 					temp = i;
 					break;
 				}
@@ -181,11 +180,15 @@ public abstract class Graph {
 		return result;
 	}
 
-	public List<Integer> getCycle() {
+	public List<Integer> getEulerCycle() throws Exception {
+
+		if(!isEulerGraph())
+			throw new Exception("Không phải đồ thị euler");
+
 		List<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < adjMatrix.length; i++) {
-			while (degree(i + 1) > 0) {
-				List<Integer> temp = subCycle(i + 1);
+			while (degree(i) > 0) {
+				List<Integer> temp = getSubEulerCycle(i);
 				if (result.size() == 0) {
 					result.addAll(temp);
 				} else {
